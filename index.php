@@ -152,6 +152,6 @@ getGenderDescription($genderArray) {
     $womanForAll = $womanGenderFull / $allGender * 100;
     $itForAll = $itGenderFull / $allGender * 100;
 
-echo "Гендерный состав аудитории:\n_________________________\nМужчины:" . ' ' . "-" . ' ' . round($manForAll, 2) . "%\nЖенщины:" . ' ' . "-" . ' ' . round($womanForAll, 2) . "%\nНе удалось определить:" . ' ' . "-" . ' ' . round($itForAll, 2) . "%";
+echo "Гендерный состав аудитории:\n_________________________\nМужчины:" . ' ' . "-" . ' ' . round($manForAll, 1) . "%\nЖенщины:" . ' ' . "-" . ' ' . round($womanForAll, 1) . "%\nНе удалось определить:" . ' ' . "-" . ' ' . round($itForAll, 1) . "%";
     
 }
