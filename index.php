@@ -1,5 +1,7 @@
-<?php $example_persons_array = [
-    [   'fullname' => 'Иванов Иван Иванович',
+<?php
+$example_persons_array = [
+    [
+        'fullname' => 'Иванов Иван Иванович',
         'job' => 'tester',
     ],
     [
@@ -42,291 +44,114 @@
         'fullname' => 'Шварцнегер Арнольд Густавович',
         'job' => 'babysitter',
     ],
-  
 ];
 
 
-$partsFullNane = [
-    'surname',
-    'name',
-    'patronomyc',
-];
 
+getFullnameFromParts($surname, $name, $patronomyc) {
 
-function getFullnameFromParts() {
-echo 'Задание 1.1';
-echo "<ul>";
-global $example_persons_array;
-$a = count($example_persons_array); 
+    return $surname . ' ' . $name . ' ' . $patronomyc;
 
-    for ($i = 0; $i < $a; $i++) {
-    
-    echo "<li>";
-    echo $fullStringName = $example_persons_array[$i]['fullname'] . ';';
-    echo "</li>";
-    }
-    echo "</ul>";
+};
+
+getPartsFromFullname($fullName) {
+
+    $findArray = ['surname', 'name', 'patronomyc'];
+    $nameArray = explode(' ', $fullName);
+
+    return array_combine($findArray, $nameArray);
 }
-getFullnameFromParts();
 
-function getPartsFromFullname() {
+getShortName($fullName) {
+
+    $a = getPartsFromFullname($fullName);
+    $b = mb_substr($a[surname], 0, 1);
+
+    return $a[name] . ' ' . $b . '.' . ';';
+}
+
+getGenderFromName($fullName) {
+
+
+    $a = getPartsFromFullname($fullName);
+    $finalPr = 0;
+
+    $womanFirst = mb_substr($a[patronomyc], -3);
+    if ($womanFirst == 'вна') {
+        $finalPr -= 1;
+    }
    
-echo 'Задание 1.2';
-echo "<ul>";
-    global $example_persons_array;
-    global $partsFullNane;
-    $a = count($example_persons_array);
-
-    for ($i=0; $i < $a; $i++) {
-
-    $partOne = explode (' ', $example_persons_array[$i]['fullname']);
-    echo "<li>";
-    print_r (array_combine($partsFullNane, $partOne));
-    echo "</li>";
-    }
-    echo "</ul>";
-} 
-getPartsFromFullname();
-
-
-function getShortName() {
-
-echo 'Задание 2';
-echo "<ul>";
-global $example_persons_array;
-    global $partsFullNane;
-    $a = count($example_persons_array);
-
-    for ($i=0; $i < $a; $i++) {
-
-    $partOne = explode (' ', $example_persons_array[$i]['fullname']);
-   $z = mb_substr($partOne[0], 0, 1);
-
-
-    echo "<li>";
-    echo $partOne[1]. ' ' . $z .  '.' . ';';
-    echo "</li>";
-    }
-    echo "</ul>";
-}
-
-getShortName();
-
-
-function getGenderFromName() {
-
-    echo 'Задание 3';
-    echo "<ol>";
-    global $example_persons_array;
-    $a = count($example_persons_array);
-
-   for ($i=0; $i < $a; $i++) {
-
-    $partOne = explode (' ', $example_persons_array[$i]['fullname']);
-
-    $firstFemalePr = mb_substr($partOne[2], -3);
-    if ($firstFemalePr == "вна") {
-    $firstFemalePr = 1;
-    }
-    else {
-    $firstFemalePr = 0;
+    $womanSecond = mb_substr($a[name], -1);
+    if ($womanSecond == 'а') {
+        $finalPr -= 1;
     }
 
-    $secondFemalePr = mb_substr($partOne[1], -1);
-    if ($secondFemalePr == "а") {
-        $secondFemalePr = 1;
-        }
-        else {
-        $secondFemalePr = 0;
-        }
-    
-    $thirdFemalePr = mb_substr($partOne[0], -2);
-    if ($thirdFemalePr == "ва") {
-        $thirdFemalePr = 1;
-        }
-        else {
-        $thirdFemalePr = 0;
-        }
-        
-        $firstMalePr =  mb_substr($partOne[2], -2);
-    if ($firstMalePr == "ич") {
-    $firstMalePr = 1;
-    }
-    else {
-    $firstMalePr = 0;
+    $womanThird = mb_substr($a[surname], -2);
+    if ($womanThird == 'ва') {
+        $finalPr -= 1;
     }
 
-    $secondMalePr = mb_substr($partOne[1], -1);
-    if ($secondMalePr == "й") {
-        $secondMalePr = 1;
-        }
-    elseif ($secondMalePr == "н") {
-        $secondMalePr = 1;
-    }
-        else {
-        $secondMalePr = 0;
-        }
-    
-    $thirdMalePr = mb_substr($partOne[0], -1);
-    if ($thirdMalePr == "в") {
-        $thirdMalePr = 1;
-        }
-        else {
-        $thirdMalePr = 0;
-        }
-
-    $startPr = 0;
-    $finalPr = $startPr - $firstFemalePr - $secondFemalePr - $thirdFemalePr + $firstMalePr + $secondMalePr + $thirdMalePr;
-
-    if ($finalPr >= 1) {
-        $finalPr = 'мужской';
-    }
-    elseif ($finalPr < 0) {
-        $finalPr = 'женский';
-    }
-    else {
-        $finalPr = 'не определен';
-    }
-    echo "<li>";
-    print_r($finalPr);
-    echo "</li>"; 
-  }
-  echo "</ol>";
-}
-
-getGenderFromName();
-
-
-
-
-function getGenderDescription() {
-
-    echo 'Задание 4';
-    echo "<ul>";
-    global $example_persons_array;
-    $a = count($example_persons_array);
-    $genderArray = array(0);
-
-   for ($i=0; $i < $a; $i++) {
-
-    $partOne = explode (' ', $example_persons_array[$i]['fullname']);
-
-
-    $firstFemalePr = mb_substr($partOne[2], -3);
-    if ($firstFemalePr == "вна") {
-    $firstFemalePr = 1;
-    }
-    else {
-    $firstFemalePr = 0;
+    $manFirst = mb_substr($a[patronomyc], -);
+    if ($manFirst == 'ич') {
+        $finalPr += 1;
     }
 
-    $secondFemalePr = mb_substr($partOne[1], -1);
-    if ($secondFemalePr == "а") {
-        $secondFemalePr = 1;
-        }
-        else {
-        $secondFemalePr = 0;
-        }
-    
-    $thirdFemalePr = mb_substr($partOne[0], -2);
-    if ($thirdFemalePr == "ва") {
-        $thirdFemalePr = 1;
-        }
-        else {
-        $thirdFemalePr = 0;
-        }
-        
-        $firstMalePr =  mb_substr($partOne[2], -2);
-    if ($firstMalePr == "ич") {
-    $firstMalePr = 1;
+    $manSecond = mb_substr($a[name], -1);
+    if ($manSecond == 'й') {
+        $finalPr += 1;
     }
-    else {
-    $firstMalePr = 0;
+    elseif ($manSecond == 'н') {
+        $finalPr += 1;
     }
-
-    $secondMalePr = mb_substr($partOne[1], -1);
-    if ($secondMalePr == "й") {
-        $secondMalePr = 1;
-        }
-    elseif ($secondMalePr == "н") {
-        $secondMalePr = 1;
+  
+    $manThird = mb_substr($a[surname], -1);
+    if ($manThird == 'в') {
+        $finalPr = +1;
     }
-        else {
-        $secondMalePr = 0;
-        }
-    
-    $thirdMalePr = mb_substr($partOne[0], -1);
-    if ($thirdMalePr == "в") {
-        $thirdMalePr = 1;
-        }
-        else {
-        $thirdMalePr = 0;
-        }
-
-    $startPr = 0;
-    $finalPr = $startPr - $firstFemalePr - $secondFemalePr - $thirdFemalePr + $firstMalePr + $secondMalePr + $thirdMalePr;
-
-    if ($finalPr >= 1) {
-        $finalPr = 'мужской';
-    }
-    elseif ($finalPr < 0) {
-        $finalPr = 'женский';
-    }
-    else {
-        $finalPr = 'не определен';
-    }
-
-    
-    $genderArray[$i] = $finalPr;
  
-  }
+if (($finalPr <=> 0) > 0) {
 
-$manGender0 = array_filter($genderArray, function($genderOne){
-
-    return ($genderOne) == 'мужской';
-});
-$manGenderFull = count($manGender0);
-
-$womanGender0 = array_filter($genderArray, function($genderTwo){
-
-    return ($genderTwo) == 'женский';
-});
-$womanGenderFull = count($womanGender0);
-
-$itGender0 = array_filter($genderArray, function($genderThree){
-
-    return ($genderThree) == 'не определен';
-});
-$itGenderFull = count($itGender0);
-
-$allGender = count($genderArray);
-
-$manForAll = $manGenderFull / $allGender * 100;
-$womanForAll = $womanGenderFull / $allGender * 100;
-$itForAll = $itGenderFull / $allGender * 100;
-
-echo "<li>";
-echo "Гендерный состав аудитории:";
-echo "</li>";
-
-echo "<li>";
-echo "_________________________";
-echo "</li>";
-
-echo "<li>";
-echo 'Мужчины:' . ' ' . round($manForAll, 2) . '%';
-echo "</li>";
-
-echo "<li>";
-echo 'Женщины:' . ' ' . round($womanForAll, 2) . '%';;
-echo "</li>";
-
-echo "<li>";
-echo 'не удалось определить:' . ' ' . round($itForAll, 2) . '%';;
-echo "</li>";
-
-
-echo "</ul>";
+    return 'мужской пол';
 }
 
-getGenderDescription();
+elseif (($finalPr <=> 0) < 0) {
+
+    return 'женский пол';
+}
+
+else {
+
+    return 'неопределенный пол';
+}
+
+}
+
+getGenderDescription($genderArray) {
+
+    $manGender0 = array_filter($genderArray, function($genderOne){
+
+        return ($genderOne) == 'мужской';
+    });
+    $manGenderFull = count($manGender0);
+    
+    $womanGender0 = array_filter($genderArray, function($genderTwo){
+    
+        return ($genderTwo) == 'женский';
+    });
+    $womanGenderFull = count($womanGender0);
+    
+    $itGender0 = array_filter($genderArray, function($genderThree){
+    
+        return ($genderThree) == 'не определен';
+    });
+    $itGenderFull = count($itGender0);
+    
+    $allGender = count($genderArray);
+    
+    $manForAll = $manGenderFull / $allGender * 100;
+    $womanForAll = $womanGenderFull / $allGender * 100;
+    $itForAll = $itGenderFull / $allGender * 100;
+
+echo "Гендерный состав аудитории:\n_________________________\nМужчины:" . ' ' . "-" . ' ' . round($manForAll, 2) . "%\nЖенщины:" . ' ' . "-" . ' ' . round($womanForAll, 2) . "%\nНе удалось определить:" . ' ' . "-" . ' ' . round($itForAll, 2) . "%";
+    
+}
