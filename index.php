@@ -48,13 +48,13 @@ $example_persons_array = [
 
 
 
-getFullnameFromParts($surname, $name, $patronomyc) {
+function getFullnameFromParts($surname, $name, $patronomyc) {
 
     return $surname . ' ' . $name . ' ' . $patronomyc;
 
 };
 
-getPartsFromFullname($fullName) {
+function getPartsFromFullname($fullName) {
 
     $findArray = ['surname', 'name', 'patronomyc'];
     $nameArray = explode(' ', $fullName);
@@ -62,51 +62,52 @@ getPartsFromFullname($fullName) {
     return array_combine($findArray, $nameArray);
 }
 
-getShortName($fullName) {
+function getShortName($fullName) {
 
     $a = getPartsFromFullname($fullName);
-    $b = mb_substr($a[surname], 0, 1);
+    $b = (string) $a['surname'];
+    $c = mb_substr($b, 0, 1);
 
-    return $a[name] . ' ' . $b . '.' . ';';
+    return $a['name'] . ' ' . $c . '.' . ';';
 }
 
-getGenderFromName($fullName) {
+function getGenderFromName($fullName) {
 
 
     $a = getPartsFromFullname($fullName);
     $finalPr = 0;
 
-    $womanFirst = mb_substr($a[patronomyc], -3);
+    $womanFirst = mb_substr((string)$a['patronomyc'], -3);
     if ($womanFirst == 'вна') {
-        $finalPr -= 1;
+        $finalPr = $finalPr - 1;
     }
    
-    $womanSecond = mb_substr($a[name], -1);
+    $womanSecond = mb_substr((string)$a['name'], -1);
     if ($womanSecond == 'а') {
-        $finalPr -= 1;
+        $finalPr = $finalPr - 1;
     }
 
-    $womanThird = mb_substr($a[surname], -2);
+    $womanThird = mb_substr((string)$a['surname'], -2);
     if ($womanThird == 'ва') {
-        $finalPr -= 1;
+        $finalPr = $finalPr - 1;
     }
 
-    $manFirst = mb_substr($a[patronomyc], -);
+    $manFirst = mb_substr((string)$a['patronomyc'], -);
     if ($manFirst == 'ич') {
-        $finalPr += 1;
+        $finalPr = $finalPr + 1;
     }
 
-    $manSecond = mb_substr($a[name], -1);
+    $manSecond = mb_substr((string)$a['name'], -1);
     if ($manSecond == 'й') {
-        $finalPr += 1;
+        $finalPr = $finalPr + 1;
     }
     elseif ($manSecond == 'н') {
-        $finalPr += 1;
+        $finalPr = $finalPr + 1;
     }
   
-    $manThird = mb_substr($a[surname], -1);
+    $manThird = mb_substr((string)$a['surname'], -1);
     if ($manThird == 'в') {
-        $finalPr = +1;
+        $finalPr = $finalPr + 1;
     }
  
 if (($finalPr <=> 0) > 0) {
@@ -126,7 +127,7 @@ else {
 
 }
 
-getGenderDescription($genderArray) {
+function getGenderDescription($genderArray) {
 
     $manGender0 = array_filter($genderArray, function($genderOne){
 
